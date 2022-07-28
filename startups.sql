@@ -1,23 +1,27 @@
 CREATE TABLE startup(
-	id_startup CHAR(5) PRIMARY KEY NOT NULL,
+	id_startup INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 	nome_startup VARCHAR(50) NOT NULL,
     cidade_sede VARCHAR(50)
 );
+ALTER TABLE startup AUTO_INCREMENT=10001;
 
 CREATE TABLE linguagem_programacao(
-	id_linguagem CHAR(5) PRIMARY KEY NOT NULL,
+	id_linguagem INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     nome_linguagem VARCHAR(50) NOT NULL,
     ano_lancamento YEAR NOT NULL
 );
+ALTER TABLE linguagem_programacao AUTO_INCREMENT=20001;
 
 CREATE TABLE programador(
-	id_programador CHAR(5) PRIMARY KEY NOT NULL,
+	id_programador INT NOT NULL AUTO_INCREMENT,
     id_startup CHAR(5) NOT NULL,
     nome_programador VARCHAR(50) NOT NULL,
     genero CHAR(1),
     data_nasc DATE,
-    email VARCHAR(50) UNIQUE
+    email VARCHAR(50) UNIQUE,
+    PRIMARY KEY(id_programador)
 );
+ALTER TABLE programador AUTO_INCREMENT=30001;
 
 CREATE TABLE programador_linguagem(
 	id_programador CHAR(5) NOT NULL,
@@ -47,7 +51,6 @@ CREATE TRIGGER before_delete_linguagem_prog
     END IF;
     END
 $$
-
 DELIMITER ;
 
 
@@ -77,7 +80,7 @@ CREATE TRIGGER after_update_startup_id
     SET old.id_startup = new.id_startup;
     END IF;
     END
-    $$
+$$
 	DELIMITER ;
     
     
@@ -92,41 +95,40 @@ CREATE TRIGGER before_delete_linguagem_prog_startup
         SET MESSAGE_TEXT = 'ERROR';
     END IF;
     END
-$$
-
-DELIMITER ;
+ $$ 
+ DELIMITER ;
 
 INSERT INTO startup VALUES
-('10001','Tech4Toy','Porto Alegre'), 
-('10002','Smart123','Belo Horizonte'), 
-('10003','knowledgeUp','Rio de Janeiro'), 
-('10004','BSI Next Level','Recife'), 
-('10005','QualiHealth','São Paulo'), 
-('10006','ProEdu','Florianópolis');
+(DEFAULT,'Tech4Toy','Porto Alegre'), 
+(DEFAULT,'Smart123','Belo Horizonte'), 
+(DEFAULT,'knowledgeUp','Rio de Janeiro'), 
+(DEFAULT,'BSI Next Level','Recife'), 
+(DEFAULT,'QualiHealth','São Paulo'), 
+(DEFAULT,'ProEdu','Florianópolis');
 
 INSERT INTO linguagem_programacao VALUES
-('20001','Python','1991'),
-('20002','PHP','1995'),
-('20003','Java','1995'),
-('20004','C','1972'),
-('20005','JavaScript','1995'),
-('20006','Dart','2011');
+(DEFAULT,'Python','1991'),
+(DEFAULT,'PHP','1995'),
+(DEFAULT,'Java','1995'),
+(DEFAULT,'C','1972'),
+(DEFAULT,'JavaScript','1995'),
+(DEFAULT,'Dart','2011');
 
-INSERT INTO programador VALUES
-('30001','10001','João Pedro','M','1993-06-23','joaop@mail.com'), 
-('30002','10002','Paula Silva','F','1986-01-10','paulas@mail.com'), 
-('30003','10003','Renata Vieira','F','1991-07-05','renatav@mail.com'), 
-('30004','10004','Felipe Santos','M','1976-11-25','felipes@mail.com'), 
-('30005','10001','Ana Cristina','F','1968-02-19','anac@mail.com'), 
-('30006','10004','Alexandre Alves','M','1988-07-07','alexandrea@mail.com'), 
-('30007','10002','Laura Marques','F','1987-10-04','lauram@mail.com');
+INSERT INTO programador () VALUES
+(DEFAULT,'10001','João Pedro','M','1993-06-23','joaop@mail.com'), 
+(DEFAULT,'10002','Paula Silva','F','1986-01-10','paulas@mail.com'), 
+(DEFAULT,'10003','Renata Vieira','F','1991-07-05','renatav@mail.com'), 
+(DEFAULT,'10004','Felipe Santos','M','1976-11-25','felipes@mail.com'), 
+(DEFAULT,'10001','Ana Cristina','F','1968-02-19','anac@mail.com'), 
+(DEFAULT,'10004','Alexandre Alves','M','1988-07-07','alexandrea@mail.com'), 
+(DEFAULT,'10002','Laura Marques','F','1987-10-04','lauram@mail.com');
 
 
 INSERT INTO programador_linguagem VALUES
 ('30001','20001'), 
 ('30001','20002'), 
 ('30002','20003'), 
-('30002','20004'), 
+('30003','20004'), 
 ('30003','20005'), 
 ('30004','20005'), 
 ('30007','20001'), 
